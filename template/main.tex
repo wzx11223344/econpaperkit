@@ -1,0 +1,233 @@
+% EconPaperKit — 经济学论文 LaTeX 模板
+% 支持中英文，适配经济学论文常用格式
+
+\documentclass[12pt,a4paper]{article}
+
+% ===== 中文支持 (取消注释以启用中文) =====
+% \usepackage[UTF8]{ctex}
+% \usepackage[heading]{ctex}
+
+% ===== 页面布局 =====
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing  % 1.5 倍行距
+
+% ===== 数学与计量经济学 =====
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{bm}           % 粗体数学符号
+\usepackage{bbm}          % 黑板粗体
+
+% 常用计量经济学符号
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\plim}{\operatorname{plim}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+
+% ===== 表格 =====
+\usepackage{booktabs}     % 三线表
+\usepackage{threeparttable}
+\usepackage{dcolumn}      % 小数点对齐
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+
+% 三线表回归结果宏
+\newcommand{\regtable}[1]{%
+  \begin{table}[htbp]
+    \centering
+    \caption{回归结果}
+    \begin{tabular}{l d{4} d{4} d{4} d{4}}
+      \toprule
+      & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} 
+      & \multicolumn{1}{c}{(3)} & \multicolumn{1}{c}{(4)} \\
+      \midrule
+      #1
+      \bottomrule
+    \end{tabular}
+  \end{table}
+}
+
+% ===== 图片 =====
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ===== 参考文献 =====
+\usepackage[backend=biber,style=authoryear,maxcitenames=2]{biblatex}
+\addbibresource{references.bib}
+
+% ===== 超链接 =====
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+% ===== 其他 =====
+\usepackage{enumitem}
+\usepackage{appendix}
+\usepackage[nottoc]{tocbibind}
+
+% ===== 标题信息 =====
+\title{论文标题\\\large 副标题（如有）}
+\author{作者姓名\thanks{联系方式: email@example.com}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ===== 摘要 =====
+\begin{abstract}
+本文研究了[研究问题]，使用[数据来源]和[研究方法]，
+发现[主要结论]。本文的贡献在于[学术贡献]。
+\vspace{0.5cm}
+
+\noindent\textbf{关键词:} 关键词1, 关键词2, 关键词3
+
+\noindent\textbf{JEL 分类:} C01, C13, O40
+\end{abstract}
+
+% ===== 正文 =====
+\section{引言}
+
+[研究背景与意义]
+
+本文的结构安排如下：第二节回顾相关文献；第三节建立理论框架；
+第四节描述数据和变量；第五节报告实证结果；
+第六节进行稳健性检验；第七节总结全文。
+
+\section{文献综述}
+
+[文献回顾与述评]
+
+\section{理论框架}
+
+\subsection{基准模型}
+
+考虑如下计量模型：
+\begin{equation}\label{eq:baseline}
+  y_{it} = \alpha + \beta X_{it} + \gamma Z_{it} + \mu_i + \lambda_t + \varepsilon_{it}
+\end{equation}
+
+其中 $y_{it}$ 为被解释变量，$X_{it}$ 为核心解释变量，$Z_{it}$ 为控制变量，
+$\mu_i$ 为个体固定效应，$\lambda_t$ 为时间固定效应。
+
+\subsection{识别策略}
+
+为处理潜在的内生性问题，本文采用[工具变量/双重差分/断点回归]方法。
+
+\section{数据与变量}
+
+\subsection{数据来源}
+
+本文数据来自[数据来源]，样本期间为[起始年份]至[终止年份]，
+涵盖[样本量]个观测值。
+
+\subsection{变量定义}
+
+\subsubsection{被解释变量}
+
+[变量名]：衡量[经济含义]，数据来源为[来源]。
+
+\subsubsection{核心解释变量}
+
+[变量名]：衡量[经济含义]，数据来源为[来源]。
+
+\subsubsection{控制变量}
+
+包括[变量列表]，控制[潜在混淆因素]。
+
+% === 描述性统计表 ===
+\begin{table}[htbp]
+  \centering
+  \caption{描述性统计}
+  \label{tab:desc}
+  \begin{tabular}{l c c c c c}
+    \toprule
+    变量 & 观测数 & 均值 & 标准差 & 最小值 & 最大值 \\
+    \midrule
+    $y$   & 1,000 & 10.50 & 3.20 & 2.10 & 25.80 \\
+    $X_1$ & 1,000 &  5.30 & 1.80 & 1.00 & 10.00 \\
+    $X_2$ & 1,000 &  0.45 & 0.50 & 0.00 &  1.00 \\
+    $Z_1$ & 1,000 & 20.10 & 8.50 & 5.00 & 45.00 \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \item 注：此表报告了主要变量的描述性统计量。
+  \end{tablenotes}
+\end{table}
+
+\section{实证结果}
+
+\subsection{基准回归}
+
+表~\ref{tab:baseline} 报告了基准回归结果。
+第(1)列仅包含核心解释变量，第(2)列加入控制变量，
+第(3)列加入个体固定效应，第(4)列进一步加入时间固定效应。
+
+\begin{table}[htbp]
+  \centering
+  \caption{基准回归结果}
+  \label{tab:baseline}
+  \begin{tabular}{l d{4} d{4} d{4} d{4}}
+    \toprule
+    被解释变量: $y$ & \multicolumn{1}{c}{(1)} & \multicolumn{1}{c}{(2)} 
+    & \multicolumn{1}{c}{(3)} & \multicolumn{1}{c}{(4)} \\
+    \midrule
+    $X_1$ & 0.523^{***} & 0.485^{***} & 0.412^{***} & 0.398^{***} \\
+          & (0.082)     & (0.078)     & (0.065)     & (0.061)     \\
+    $X_2$ & -0.234^{**} & -0.198^{**} & -0.176^{**} & -0.165^{**} \\
+          & (0.095)     & (0.089)     & (0.072)     & (0.068)     \\
+    \midrule
+    控制变量  & No  & Yes & Yes & Yes \\
+    个体 FE   & No  & No  & Yes & Yes \\
+    时间 FE   & No  & No  & No  & Yes \\
+    \midrule
+    观测数    & 1,000 & 1,000 & 1,000 & 1,000 \\
+    $R^2$     & 0.12  & 0.28  & 0.45  & 0.52  \\
+    \bottomrule
+  \end{tabular}
+  \begin{tablenotes}
+    \item 注：括号内为异方差稳健标准误。\\
+    $^{*}p<0.10,\;^{**}p<0.05,\;^{***}p<0.01$
+  \end{tablenotes}
+\end{table}
+
+\subsection{内生性处理}
+
+[工具变量/2SLS/DID 结果]
+
+\section{稳健性检验}
+
+\subsection{替换被解释变量}
+
+\subsection{替换样本期间}
+
+\subsection{安慰剂检验}
+
+\subsection{排除异常值}
+
+\section{结论}
+
+本文研究了[研究问题]，主要发现如下：
+\begin{enumerate}
+  \item [发现一]
+  \item [发现二]
+  \item [发现三]
+\end{enumerate}
+
+本文的政策含义是[政策建议]。研究的局限性在于[局限性]，
+未来研究可以[未来方向]。
+
+% ===== 参考文献 =====
+\printbibliography
+
+% ===== 附录 =====
+\appendix
+\section{变量定义表}
+\section{附加回归结果}
+
+\end{document}
